@@ -1,0 +1,9 @@
+.idea
+
+/src/graph-based/model/
+/src/t5-article/model/
+/src/t5-headline/model/
+
+/src/graph-based/graph-based.zip
+/src/t5-article/t5-article.zip
+/src/t5-headline/t5-headline.zip
