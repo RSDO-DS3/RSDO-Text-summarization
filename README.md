@@ -34,6 +34,10 @@ To use the `metamodel`, you have to start each model as a uvicorn server with th
 After all four models are up and running, you can call only the metamodel, which will automatically select the best summarizer based on the analysis of the input text. You can find example requests in the `commands.sh` script. 
 
 # Run with docker
-Each model can be run with Docker as well. The instructions are in the `README.md` file of each model. 
+Models can be run with Docker as well. The instructions are in the `README.md` file of each model. 
 
+ ---
 
+> Operacijo Razvoj slovenščine v digitalnem okolju sofinancirata Republika Slovenija in Evropska unija iz Evropskega sklada za regionalni razvoj. Operacija se izvaja v okviru Operativnega programa za izvajanje evropske kohezijske politike v obdobju 2014-2020.
+
+![](Logo_EKP_sklad_za_regionalni_razvoj_SLO_slogan.jpg)
