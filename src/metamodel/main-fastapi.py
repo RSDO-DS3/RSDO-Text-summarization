@@ -20,16 +20,21 @@ ports = {
 @app.post("/auto-select/")
 async def select_model(item: Item):
     text = item.text
+
+    # analyse text and select the best summarizer
     if len(text.split()) > 350:
         model = 'graph-based'
     else:
         model = 't5-headline'
 
+    # get port of model
     model_port = ports[model]
 
+    # print url of a model
     url = f'http://{model}:{str(model_port)}/summarize/'
-    print(url)
+    print("Sending text to ", url)
 
+    # send text
     body = {
         "text": text,
     }

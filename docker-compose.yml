@@ -1,0 +1,20 @@
+# https://stackoverflow.com/questions/62254343/why-cant-my-two-docker-containers-communicate-even-though-they-are-both-respond
+
+version: "3.9"
+services:
+  metamodel:
+    build: ./src/metamodel
+    ports:
+      - "8000:8000"
+  graph-based:
+    build: ./src/graph-based
+    ports:
+      - "8001:8001"
+  t5-headline:
+    build: ./src/t5-headline
+    ports:
+      - "8002:8002"
+  t5-article:
+    build: ./src/t5-article
+    ports:
+      - "8003:8003"
