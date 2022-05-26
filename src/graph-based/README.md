@@ -12,12 +12,5 @@ To test the service, try sending a request with the curl command provided in the
 # Docker
 `docker build . -t graph-based -f Dockerfile`
 
-`docker run --rm -it --name graph-based \
-       -p:8001:8001 \
-       graph-based`
-
-`docker run --rm -it --name graph-based \
-       --mount type=bind,source="$(pwd)"/BERT_data,target=/BERT_data,ro \
-       -p:8001:8001 \
-       graph-based`
+`docker run --rm -it --name graph-based -p:8001:8001 graph-based`
 
