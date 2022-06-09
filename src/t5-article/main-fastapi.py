@@ -12,7 +12,8 @@ class Item(BaseModel):
 app = FastAPI()
 
 # import tokenizer and model
-model_path = 'model/SloT5-asn_plus_sta/checkpoint-170000'
+model_path = 'model/SloT5-cnndm_slo_pretraining'
+print(model_path)
 tokenizer = T5Tokenizer.from_pretrained(model_path)
 model = T5ForConditionalGeneration.from_pretrained(model_path)
 

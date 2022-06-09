@@ -11,7 +11,7 @@ if __name__ == '__main__':
     text = args.text
 
     # import tokenizer and model
-    model_path = 'model/SloT5-asn_plus_sta/checkpoint-170000'
+    model_path = 'model/SloT5-cnndm_slo_pretraining'
     tokenizer = T5Tokenizer.from_pretrained(model_path)
     model = T5ForConditionalGeneration.from_pretrained(model_path)
 
