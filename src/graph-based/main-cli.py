@@ -1,7 +1,8 @@
-from sentence_transformers import SentenceTransformer
-from src.inference import summarize
 import argparse
 
+from sentence_transformers import SentenceTransformer
+
+from src.inference import summarize
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Graph-based text summarization.')
@@ -20,6 +21,3 @@ if __name__ == '__main__':
     # run main
     summary = summarize(model, text, n)
     print(summary)
-
-
-

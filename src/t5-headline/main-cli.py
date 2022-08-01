@@ -1,5 +1,8 @@
 import argparse
 
+from transformers import T5ForConditionalGeneration, T5Tokenizer
+
+from src.inference import summarize
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='T5 headline generation.')
