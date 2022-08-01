@@ -1,5 +1,3 @@
-# https://stackoverflow.com/questions/62254343/why-cant-my-two-docker-containers-communicate-even-though-they-are-both-respond
-
 version: "3.9"
 services:
   metamodel:
