@@ -16,3 +16,7 @@ services:
     build: ./src/t5-article
     ports:
       - "8003:8003"
+  sumbasic:
+    build: ./src/sumbasic
+    ports:
+      - "8004:8004"
