@@ -20,3 +20,7 @@ services:
     build: ./src/sumbasic
     ports:
       - "8004:8004"
+  hybrid-long:
+    build: ./src/hybrid-long
+    ports:
+      - "8005:8005"

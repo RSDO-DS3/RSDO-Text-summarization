@@ -3,6 +3,7 @@
 /src/graph-based/model/
 /src/t5-article/model/
 /src/t5-headline/model/
+/src/hybrid-long/model/
 /docker-images
 
 /src/graph-based/graph-based.zip
