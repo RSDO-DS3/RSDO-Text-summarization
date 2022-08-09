@@ -14,12 +14,12 @@ if __name__ == '__main__':
     text = args.text
 
     # import models
-    ext_model_name = 'LaBSE'
-    ext_model = SentenceTransformer('model/LaBSE', device='cpu')
+    ext_model_path = 'model/LaBSE'
+    ext_model = SentenceTransformer(ext_model_path, device='cpu')
 
-    model_path = 'model/SloT5-cnndm_slo_pretraining'
-    abs_tokenizer = T5Tokenizer.from_pretrained(model_path)
-    abs_model = T5ForConditionalGeneration.from_pretrained(model_path)
+    abs_model_path = 'model/SloT5-cnndm_slo_pretraining'
+    abs_tokenizer = T5Tokenizer.from_pretrained(abs_model_path)
+    abs_model = T5ForConditionalGeneration.from_pretrained(abs_model_path)
 
     # run main
     summary = summarize(abs_tokenizer, abs_model, ext_model, text)

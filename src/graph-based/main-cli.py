@@ -13,7 +13,7 @@ if __name__ == '__main__':
     text = args.text
 
     # import model
-    model_name = 'LaBSE'
+    model_name = 'model/LaBSE'
     model = SentenceTransformer(model_name, device='cpu')
 
     # run main

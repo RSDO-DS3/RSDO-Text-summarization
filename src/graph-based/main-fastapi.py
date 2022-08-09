@@ -11,8 +11,8 @@ class Item(BaseModel):
 app = FastAPI()
 
 # import model
-model_name = 'LaBSE'
-model = SentenceTransformer('model/LaBSE', device='cpu')
+model_path = 'model/LaBSE'
+model = SentenceTransformer(model_path, device='cpu')
 
 @app.post("/summarize/")
 async def generate_summary(item: Item):
