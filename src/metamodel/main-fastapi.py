@@ -14,7 +14,8 @@ ports = {
     'metamodel': 8000,
     'graph-based': 8001,
     't5-headline': 8002,
-    't5-article': 8003
+    't5-article': 8003,
+    'hybrid-long': 8004,
 }
 
 @app.post("/auto-select/")

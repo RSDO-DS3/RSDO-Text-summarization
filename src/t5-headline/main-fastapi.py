@@ -20,4 +20,4 @@ model = T5ForConditionalGeneration.from_pretrained(model_path)
 async def generate_summary(item: Item):
     summary = summarize(tokenizer, model, item.text)
     return {'summary': summary,
-            'model': model_path}
+            'model': 't5-headline'}

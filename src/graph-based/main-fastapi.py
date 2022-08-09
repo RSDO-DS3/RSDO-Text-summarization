@@ -18,4 +18,4 @@ model = SentenceTransformer('model/LaBSE', device='cpu')
 async def generate_summary(item: Item):
     summary = summarize(model, item.text, 3)
     return {'summary': summary,
-            'model': model_name}
+            'model': 'graph-based'}
