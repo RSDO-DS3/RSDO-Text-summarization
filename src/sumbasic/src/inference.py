@@ -40,6 +40,21 @@ def get_best_sentence(text_sentences, lemmatized_sentences, word_probabilities):
     return sentence_weights[0]
 
 
+def get_summary_length(sent_num):
+    if sent_num == 1:
+        return 1
+    elif 1 < sent_num < 10:
+        return 2
+    elif 10 < sent_num < 30:
+        return 3
+    elif 30 < sent_num < 50:
+        return 5
+    elif 50 < sent_num < 100:
+        return 6
+    else:
+        return 7
+
+
 def summarize(text, summary_length):
     """
     Implementation of sumbasic: https://www.cs.bgu.ac.il/~elhadad/nlp09/sumbasic.pdf
@@ -54,6 +69,7 @@ def summarize(text, summary_length):
 
     # preprocess text into sentences
     text_sentences = sent_tokenize(text, language='slovene')
+    summary_length = get_summary_length(len(text_sentences))
     text_sentences_copy = text_sentences.copy()
     lemmatized_sentences = [filter_text(slovene_lemmatizer, slovene_stopwords, s) for s in text_sentences]
     tokenized_text = word_tokenize(" ".join(lemmatized_sentences), language='slovene')
