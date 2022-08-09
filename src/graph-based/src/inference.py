@@ -5,9 +5,27 @@ import nltk
 nltk.download('punkt')
 
 
-def summarize(model, text: str, n: int):
+def get_summary_length(sent_num):
+    if sent_num == 1:
+        return 1
+    elif 1 < sent_num < 10:
+        return 2
+    elif 10 < sent_num < 30:
+        return 3
+    elif 30 < sent_num < 50:
+        return 5
+    elif 50 < sent_num < 100:
+        return 6
+    else:
+        return 7
+
+
+def summarize(model, text: str):
     # tokenize
     sentences = nltk.sent_tokenize(text, language='slovene')
+
+    # get summary length
+    n = get_summary_length(len(sentences))
 
     # Compute the sentence embeddings
     embeddings = model.encode(sentences, convert_to_numpy=True, batch_size=8)

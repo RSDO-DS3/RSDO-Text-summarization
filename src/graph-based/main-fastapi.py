@@ -16,6 +16,6 @@ model = SentenceTransformer('model/LaBSE', device='cpu')
 
 @app.post("/summarize/")
 async def generate_summary(item: Item):
-    summary = summarize(model, item.text, 3)
+    summary = summarize(model, item.text)
     return {'summary': summary,
             'model': 'graph-based'}
