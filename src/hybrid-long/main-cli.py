@@ -3,6 +3,7 @@ import pandas as pd
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 import torch
+import os
 
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 
@@ -10,13 +11,14 @@ from src.inference import summarize
 
 
 def process_batch(input_path, abs_tokenizer, abs_model, ext_model, device):
-    df = pd.read_json(input_path, lines=True)
-    generated_summaries = []
-    for text in tqdm(df['text']):
-        summary = summarize(abs_tokenizer, abs_model, ext_model, text, device)
-        generated_summaries.append(summary)
-    df['hybrid-long'] = generated_summaries
-    df.to_json('hybrid-long.jsonl', lines=True, orient='records', force_ascii=False)
+    os.makedirs('output', exist_ok=True)
+    for idx, df in enumerate(pd.read_json(input_path, lines=True, chunksize=1000)):
+        generated_summaries = []
+        for text in tqdm(df['text']):
+            summary = summarize(abs_tokenizer, abs_model, ext_model, text, device)
+            generated_summaries.append(summary)
+        df['hybrid-long'] = generated_summaries
+        df.to_json(f'output/{idx}.jsonl', lines=True, orient='records', force_ascii=False)
 
 
 if __name__ == '__main__':

@@ -11,13 +11,14 @@ from src.inference import summarize
 
 
 def process_batch(input_path, tokenizer, model, device):
-    df = pd.read_json(input_path, lines=True)
-    generated_summaries = []
-    for text in tqdm(df['text']):
-        summary = summarize(tokenizer, model, text, device)
-        generated_summaries.append(summary)
-    df['t5-article'] = generated_summaries
-    df.to_json('t5-article.jsonl', lines=True, orient='records', force_ascii=False)
+    os.makedirs('output', exist_ok=True)
+    for idx, df in enumerate(pd.read_json(input_path, lines=True, chunksize=1000)):
+        generated_summaries = []
+        for text in tqdm(df['text']):
+            summary = summarize(tokenizer, model, text, device)
+            generated_summaries.append(summary)
+        df['t5-article'] = generated_summaries
+        df.to_json(f'output/{idx}.jsonl', lines=True, orient='records', force_ascii=False)
 
 
 if __name__ == '__main__':

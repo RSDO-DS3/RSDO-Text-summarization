@@ -8,13 +8,14 @@ from src.inference import summarize
 
 
 def process_batch(input_path, model):
-    df = pd.read_json(input_path, lines=True)
-    generated_summaries = []
-    for text in tqdm(df['text']):
-        summary = summarize(model, text)
-        generated_summaries.append(summary)
-    df['graph-based'] = generated_summaries
-    df.to_json('graph-based.jsonl', lines=True, orient='records', force_ascii=False)
+    os.makedirs('output', exist_ok=True)
+    for idx, df in enumerate(pd.read_json(input_path, lines=True, chunksize=1000)):
+        generated_summaries = []
+        for text in tqdm(df['text']):
+            summary = summarize(model, text)
+            generated_summaries.append(summary)
+        df['graph-based'] = generated_summaries
+        df.to_json(f'output/{idx}.jsonl', lines=True, orient='records', force_ascii=False)
 
 
 if __name__ == '__main__':

@@ -1,18 +1,20 @@
 import argparse
 import pandas as pd
 from tqdm import tqdm
+import os
 
 from src.inference import summarize
 
 
 def process_batch(input_path):
-    df = pd.read_json(input_path, lines=True)
-    generated_summaries = []
-    for text in tqdm(df['text']):
-        summary = summarize(text)
-        generated_summaries.append(summary)
-    df['sumbasic'] = generated_summaries
-    df.to_json('sumbasic.jsonl', lines=True, orient='records', force_ascii=False)
+    os.makedirs('output', exist_ok=True)
+    for idx, df in enumerate(pd.read_json(input_path, lines=True, chunksize=1000)):
+        generated_summaries = []
+        for text in tqdm(df['text']):
+            summary = summarize(text)
+            generated_summaries.append(summary)
+        df['sumbasic'] = generated_summaries
+        df.to_json(f'output/{idx}.jsonl', lines=True, orient='records', force_ascii=False)
 
 
 if __name__ == '__main__':
