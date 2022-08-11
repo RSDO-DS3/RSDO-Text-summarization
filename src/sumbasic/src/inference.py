@@ -55,7 +55,7 @@ def get_summary_length(sent_num):
         return 7
 
 
-def summarize(text, summary_length):
+def summarize(text):
     """
     Implementation of sumbasic: https://www.cs.bgu.ac.il/~elhadad/nlp09/sumbasic.pdf
     """

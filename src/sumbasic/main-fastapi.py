@@ -11,6 +11,6 @@ app = FastAPI()
 
 @app.post("/summarize/")
 async def generate_summary(item: Item):
-    summary = summarize(item.text, 3)
+    summary = summarize(item.text)
     return {'summary': summary,
             'model': 'sumbasic'}
