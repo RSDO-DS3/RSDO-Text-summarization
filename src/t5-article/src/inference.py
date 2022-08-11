@@ -1,6 +1,6 @@
-def summarize(tokenizer, model, text):
+def summarize(tokenizer, model, text, device):
     input_ids = tokenizer(f"summarize: {text}", return_tensors="pt", max_length=512, truncation=True).input_ids
-    input_ids = input_ids.to("cpu")
+    input_ids = input_ids.to(device)
     outputs = model.generate(input_ids,
                              max_length=256,
                              num_beams=5,

@@ -6,9 +6,9 @@ import nltk
 nltk.download('punkt')
 
 
-def abs_summarize(tokenizer, model, text):
+def abs_summarize(tokenizer, model, text, device):
     input_ids = tokenizer(f"summarize: {text}", return_tensors="pt", max_length=512, truncation=True).input_ids
-    input_ids = input_ids.to("cpu")
+    input_ids = input_ids.to(device)
     outputs = model.generate(input_ids, max_length=256, no_repeat_ngram_size=5, num_beams=5)
     decoded_preds = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return decoded_preds
@@ -61,7 +61,7 @@ def ext_summarize(model, text: str, n: int):
     return " ".join([sent for _, sent in idx_sentences])
 
 
-def summarize(abs_tokenizer, abs_model, ext_model, text):
+def summarize(abs_tokenizer, abs_model, ext_model, text, device):
     hybrid_parts = 7
     hybrid_chunk_size = len(text.split()) // hybrid_parts
     hybrid_chunked_text = chunk_text(text, chunk_size=hybrid_chunk_size)
@@ -72,7 +72,7 @@ def summarize(abs_tokenizer, abs_model, ext_model, text):
 
     hybrid_summary = []
     for ext in extractive_summary:
-        hybrid_summary.append(abs_summarize(abs_tokenizer, abs_model, ext))
+        hybrid_summary.append(abs_summarize(abs_tokenizer, abs_model, ext, device))
     hybrid_summary = ' '.join(hybrid_summary)
 
     return hybrid_summary
