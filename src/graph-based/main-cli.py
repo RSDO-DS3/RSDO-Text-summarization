@@ -3,19 +3,28 @@ import pandas as pd
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 import os
+import json
 
 from src.inference import summarize
 
 
 def process_batch(input_path, model):
     os.makedirs('output', exist_ok=True)
-    for idx, df in enumerate(pd.read_json(input_path, lines=True, chunksize=1000)):
-        generated_summaries = []
-        for text in tqdm(df['text']):
-            summary = summarize(model, text)
-            generated_summaries.append(summary)
-        df['graph-based'] = generated_summaries
-        df.to_json(f'output/{idx}.jsonl', lines=True, orient='records', force_ascii=False)
+    df = pd.read_json(input_path, lines=True)
+    for idx, row in tqdm(df.iterrows(), total=len(df)):
+        example_id = row['id']
+        if os.path.isfile(f'output/{example_id}.json'):
+            continue
+        summary = summarize(model, row['text'])
+        out = {
+            'id' : example_id,
+            'graph-based': summary,
+            'text': row['text'],
+            'abstract': row['abstract'],
+            'source': row['source']
+        }
+        with open(f'output/{example_id}.json', 'w') as j:
+            json.dump(out, j, ensure_ascii=False)
 
 
 if __name__ == '__main__':
@@ -27,6 +36,7 @@ if __name__ == '__main__':
 
     text = args.text
     input_path = args.input_path
+    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
     # import model
     model_name = 'model/LaBSE'
