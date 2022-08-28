@@ -40,7 +40,6 @@ async def select_model(item: Item):
     # predict
     preprocessed_text = filter_text(text, lem_sl, stopwords).split()
     sum_model = get_recommended_model(d2v_model, metamodel, preprocessed_text)
-    print(sum_model)
 
     # get port of model
     model_port = ports[sum_model]
