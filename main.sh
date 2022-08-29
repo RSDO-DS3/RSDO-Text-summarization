@@ -23,6 +23,16 @@ conda activate t5-local
 cd "$ROOT"/src/t5-article
 uvicorn main-fastapi:app --host 0.0.0.0 --port 8003 &
 
+# sumbasic
+conda activate t5-local
+cd "$ROOT"/src/sumbasic
+uvicorn main-fastapi:app --host 0.0.0.0 --port 8004 &
+
+# hybrid long
+conda activate t5-local
+cd "$ROOT"/src/hybrid-long
+uvicorn main-fastapi:app --host 0.0.0.0 --port 8005 &
+
 
 
 
