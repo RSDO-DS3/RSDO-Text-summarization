@@ -19,7 +19,7 @@ A brief description of models:
 
 # Download pre-trained models
 
-Download models from [https://nas.cjvt.si/index.php/s/Bpob8qZ64TY3LM3](get-models) and extract them into the folders with their source code. For example, the model `t5-article` should be extracted in the `src/t5-article/model` folder.
+Download models from [link](https://nas.cjvt.si/index.php/s/Bpob8qZ64TY3LM3) and extract them into the folders with their source code. For example, the model `t5-article` should be extracted in the `src/t5-article/model` folder.
 
 # Run locally
 
