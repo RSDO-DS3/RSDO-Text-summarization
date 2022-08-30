@@ -10,4 +10,7 @@ model/
 /src/graph-based/graph-based.zip
 /src/t5-article/t5-article.zip
 /src/t5-headline/t5-headline.zip
+/src/hybrid-long/hybrid-long.zip
+/src/metamodel/metamodel.zip
+
 /src/gather_predictions.py
