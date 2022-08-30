@@ -7,7 +7,7 @@ To run this project, install python 3.8 and dependencies:
 To test the service, try sending a request with the curl command provided in the file `commands.sh`
 
 # Docker
-`docker build . -t metamodel -f Dockerfile`
+`docker buildx build --platform linux/amd64 . -t metamodel -f Dockerfile`
 
-`docker run --rm -it --name metamodel -p:8000:8000 metamodel`
+`docker run --rm --platform linux/amd64 -it --name metamodel -p:8000:8000 metamodel`
 

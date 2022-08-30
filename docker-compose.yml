@@ -1,26 +1,32 @@
 version: "3.9"
 services:
   metamodel:
+    platform: linux/amd64
     build: ./src/metamodel
     ports:
       - "8000:8000"
   graph-based:
+    platform: linux/amd64
     build: ./src/graph-based
     ports:
       - "8001:8001"
   t5-headline:
+    platform: linux/amd64
     build: ./src/t5-headline
     ports:
       - "8002:8002"
   t5-article:
+    platform: linux/amd64
     build: ./src/t5-article
     ports:
       - "8003:8003"
   sumbasic:
+    platform: linux/amd64
     build: ./src/sumbasic
     ports:
       - "8004:8004"
   hybrid-long:
+    platform: linux/amd64
     build: ./src/hybrid-long
     ports:
       - "8005:8005"

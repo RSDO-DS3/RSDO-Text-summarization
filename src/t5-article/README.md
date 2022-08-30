@@ -10,7 +10,7 @@ To run this project, install python 3.8 and dependencies:
 To test the service, try sending a request with the curl command provided in the file `commands.sh`
 
 # Docker
-`docker build . -t t5-article -f Dockerfile`
+`docker buildx build --platform linux/amd64 . -t t5-article -f Dockerfile`
 
-`docker run --rm -it --name t5-article -p:8003:8003 t5-article`
+`docker run --rm --platform linux/amd64 -it --name t5-article -p:8003:8003 t5-article`
 
