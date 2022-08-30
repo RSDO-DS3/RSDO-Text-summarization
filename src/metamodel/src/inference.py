@@ -31,4 +31,6 @@ def get_recommended_model(d2v_model, metamodel, preprocessed_text):
     ]
     averages.sort(key=lambda x: x[1], reverse=True)
 
-    return averages[0][0]
+    ranked_models = [model for model, score in averages]
+
+    return ranked_models

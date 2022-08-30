@@ -8,6 +8,8 @@ from nltk.corpus import stopwords
 from src.inference import get_recommended_model, filter_text
 from tensorflow import keras
 import uvicorn
+import nltk
+nltk.download('stopwords')
 
 
 class Item(BaseModel):
@@ -39,22 +41,32 @@ async def select_model(item: Item):
 
     # predict
     preprocessed_text = filter_text(text, lem_sl, stopwords).split()
-    sum_model = get_recommended_model(d2v_model, metamodel, preprocessed_text)
+    ranked_models = get_recommended_model(d2v_model, metamodel, preprocessed_text)
+    print(ranked_models)
 
-    # get port of model
-    model_port = ports[sum_model]
+    for sum_model in ranked_models:
+        # get port of model
+        model_port = ports[sum_model]
 
-    # print url of a model
-    url = f'http://{sum_model}:{str(model_port)}/summarize/'
-    print("Sending text to ", url)
+        # print url of a model
+        url = f'http://{sum_model}:{str(model_port)}/summarize/'
+        print("Sending text to ", url)
 
-    # send text
-    body = {
-        "text": text,
-    }
+        # send text
+        body = {
+            "text": text,
+        }
 
-    body_json = json.dumps(body, ensure_ascii=False).encode('utf8')
-    response = requests.post(url, data=body_json)
-    json_obj = json.dumps(json.loads(response.text), ensure_ascii=False)
+        body_json = json.dumps(body, ensure_ascii=False).encode('utf8')
+        try:
+            response = requests.post(url, data=body_json)
+            json_obj = json.dumps(json.loads(response.text), ensure_ascii=False)
+            return json_obj
 
-    return json_obj
+        except requests.exceptions.ConnectionError:
+            # print('Model is not available.')
+            continue
+
+    return {'summary': 'Missing summary!',
+            'model': 'No available models!'}
+
