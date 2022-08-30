@@ -19,6 +19,6 @@ model = T5ForConditionalGeneration.from_pretrained(model_path)
 
 @app.post("/summarize/")
 async def generate_summary(item: Item):
-    summary = summarize(tokenizer, model, item.text)
+    summary = summarize(tokenizer, model, item.text, 'cpu')
     return {'summary': summary,
             'model': 't5-article'}
