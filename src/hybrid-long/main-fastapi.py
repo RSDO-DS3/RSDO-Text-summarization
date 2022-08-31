@@ -22,7 +22,7 @@ abs_model = T5ForConditionalGeneration.from_pretrained(abs_model_path)
 
 @app.post("/summarize/")
 async def generate_summary(item: Item):
-    summary = summarize(abs_tokenizer, abs_model, ext_model, item.text)
+    summary = summarize(abs_tokenizer, abs_model, ext_model, item.text, 'cpu')
     return {'summary': summary,
             'model': 'hybrid-long',
             }
