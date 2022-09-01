@@ -44,28 +44,33 @@ async def select_model(item: Item):
     ranked_models = get_recommended_model(d2v_model, metamodel, preprocessed_text)
     print(ranked_models)
 
-    for sum_model in ranked_models:
-        # get port of model
-        model_port = ports[sum_model]
+    for config in ['local', 'docker']:
+        for sum_model in ranked_models:
+            # get port of model
+            model_port = ports[sum_model]
 
-        # print url of a model
-        url = f'http://{sum_model}:{str(model_port)}/summarize/'
-        print("Sending text to ", url)
+            # local and docker addresses differ
+            if config == 'local':
+                url = f'http://localhost:{str(model_port)}/summarize/'
+                print("Sending text to ", url)
+            else:
+                url = f'http://{sum_model}:{str(model_port)}/summarize/'
+                print("Sending text to ", url)
 
-        # send text
-        body = {
-            "text": text,
-        }
+            # send text
+            body = {
+                "text": text,
+            }
 
-        body_json = json.dumps(body, ensure_ascii=False).encode('utf8')
-        try:
-            response = requests.post(url, data=body_json)
-            json_obj = json.dumps(json.loads(response.text), ensure_ascii=False)
-            return json_obj
+            body_json = json.dumps(body, ensure_ascii=False).encode('utf8')
+            try:
+                response = requests.post(url, data=body_json)
+                json_obj = json.dumps(json.loads(response.text), ensure_ascii=False)
+                return json_obj
 
-        except requests.exceptions.ConnectionError:
-            # print('Model is not available.')
-            continue
+            except requests.exceptions.ConnectionError:
+                # print('Model is not available.')
+                continue
 
     return {'summary': 'Missing summary!',
             'model': 'No available models!'}
