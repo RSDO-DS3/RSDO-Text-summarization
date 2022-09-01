@@ -1,38 +1,54 @@
 #!/bin/bash
 
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -r|--root-path) root_path="$2" ;;
+    esac
+    shift
+done
+
 eval "$(conda shell.bash hook)"
-export ROOT="/mnt/e/repositories/RSDO-DS3/"
+export ROOT="$root_path"
+echo "Root folder set to $ROOT"
 
 # metamodel
-conda activate metamodel-local
 cd "$ROOT"/src/metamodel
+conda create -n metamodel-local python=3.8
+conda activate metamodel-local
+pip3 install -r requirements.txt -f https://download.pytorch.org/whl/cpu/torch_stable.html
 uvicorn main-fastapi:app --host 0.0.0.0 --port 8000 &
 
 # graph-based
-conda activate graph-based-local
 cd "$ROOT"/src/graph-based
+conda create -n graph-based-local python=3.8
+conda activate graph-based-local
+pip3 install -r requirements.txt -f https://download.pytorch.org/whl/cpu/torch_stable.html
 uvicorn main-fastapi:app --host 0.0.0.0 --port 8001 &
 
 # t5-headline
-conda activate t5-local
 cd "$ROOT"/src/t5-headline
+conda create -n t5-headline-local python=3.8
+conda activate t5-headline-local
+pip3 install -r requirements.txt -f https://download.pytorch.org/whl/cpu/torch_stable.html
 uvicorn main-fastapi:app --host 0.0.0.0 --port 8002 &
 
 # t5-article
-conda activate t5-local
 cd "$ROOT"/src/t5-article
+conda create -n t5-article-local python=3.8
+conda activate t5-article-local
+pip3 install -r requirements.txt -f https://download.pytorch.org/whl/cpu/torch_stable.html
 uvicorn main-fastapi:app --host 0.0.0.0 --port 8003 &
 
 # sumbasic
-conda activate t5-local
 cd "$ROOT"/src/sumbasic
+conda create -n sumbasic-local python=3.8
+conda activate sumbasic-local
+pip3 install -r requirements.txt
 uvicorn main-fastapi:app --host 0.0.0.0 --port 8004 &
 
 # hybrid long
-conda activate t5-local
 cd "$ROOT"/src/hybrid-long
+conda create -n hybrid-long-local python=3.8
+conda activate hybrid-long-local
+pip3 install -r requirements.txt -f https://download.pytorch.org/whl/cpu/torch_stable.html
 uvicorn main-fastapi:app --host 0.0.0.0 --port 8005 &
-
-
-
-
