@@ -11,7 +11,7 @@ class Item(BaseModel):
 app = FastAPI()
 
 # import model
-model_path = 'model/LaBSE'
+model_path = './model/LaBSE'
 model = SentenceTransformer(model_path, device='cpu')
 
 @app.post("/summarize/")

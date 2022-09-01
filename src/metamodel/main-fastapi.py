@@ -27,13 +27,13 @@ ports = {
 }
 
 # load d2v model and other requirements
-fname = "model/doc2vec/model"
+fname = "./model/doc2vec/model"
 d2v_model = Doc2Vec.load(fname)
 lem_sl = Lemmatizer('sl')
 stopwords = set(stopwords.words('slovene'))
 
 # load metamodel
-metamodel = keras.models.load_model('model/metamodel/model.h5')
+metamodel = keras.models.load_model('./model/metamodel/model.h5')
 
 @app.post("/auto-select/")
 async def select_model(item: Item):
