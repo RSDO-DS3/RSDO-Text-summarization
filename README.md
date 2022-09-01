@@ -24,7 +24,7 @@ Download models from [link](https://nas.cjvt.si/index.php/s/Bpob8qZ64TY3LM3) and
 # Run locally
 
 ### Use each model separately
-We suggest using virtual environments and python 3.8 for all models. Dependencies for each model can be installed with `pip install requirements.txt` from the root folder of models. After you installed all dependencies, you can run inference in two ways: 
+We suggest using virtual environments and python 3.8 for all models. Dependencies for each model can be installed with `pip install -r requirements.txt` from the root folder of models. After you installed all dependencies, you can run inference in two ways: 
 
 1) Command-line interface: `python main-cli.py --text 'the content of an article'`
 2) Uvicorn server: `uvicorn main-fastapi:app --host 0.0.0.0 --port xxxx`

@@ -1,6 +1,6 @@
 # Local
 To run this project, install python 3.8 and dependencies:
-`pip3 install -r requirements.txt`
+`pip3 install -r requirements.txt -f https://download.pytorch.org/whl/cpu/torch_stable.html`
 
 ### Run server
  `uvicorn main-fastapi:app --host 0.0.0.0 --port 8000`
