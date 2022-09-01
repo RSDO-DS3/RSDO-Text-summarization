@@ -29,7 +29,7 @@ We suggest using virtual environments and python 3.8 for all models. Dependencie
 1) Command-line interface: `python main-cli.py --text 'the content of an article'`
 2) Uvicorn server: `uvicorn main-fastapi:app --host 0.0.0.0 --port xxxx`
 
-You will find the details and examples of both ways in the `README.md` file of each model. 
+After the models are up and running, you can access Swagger UI documentation at `http://localhost:xxxx/docs` (`xxxx` is the port number). You will find the details and examples of both ways in the `README.md` file of each model. 
 
 ### Use metamodel
 To use the `metamodel`, you have to start each model as a uvicorn server with the following ports: 
