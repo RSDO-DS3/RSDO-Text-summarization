@@ -3,7 +3,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 import networkx as nx
 from sklearn.preprocessing import MinMaxScaler
 import nltk
-nltk.download('punkt')
+
+NLTK_PATH = f'{os.path.abspath(os.getcwd())}/deps'
+if NLTK_PATH not in nltk.data.path:
+    nltk.data.path.append(NLTK_PATH)
 
 
 def abs_summarize(tokenizer, model, text, device):
