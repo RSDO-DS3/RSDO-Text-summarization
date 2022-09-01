@@ -6,9 +6,11 @@ import numpy as np
 from lemmagen3 import Lemmatizer
 from nltk import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
+import os
 
-nltk.download('stopwords')
-nltk.download('punkt')
+NLTK_PATH = f'{os.path.abspath(os.getcwd())}/deps'
+if NLTK_PATH not in nltk.data.path:
+    nltk.data.path.append(NLTK_PATH)
 
 
 def filter_text(slovene_lemmatizer, slovene_stopwords, content):
