@@ -43,7 +43,7 @@ To use the `metamodel`, you have to start each model as a uvicorn server with th
 | sumbasic    | 8004     |
 | hybrid-long | 8005     |
 
-`main.sh` is an example of a script that automates the manual creation of uvicorn servers. 
+`main.sh` is an example of a script that automates the manual creation of uvicorn servers. Set the `--root-path` as your absolute path to the root of this project and run `y | ./main.sh --root-path /absolute/path/to/RSDO-DS3/`. This will automatically create conda environments for all models. 
 
 After all six models are up and running, you can call only the metamodel, which will automatically select the best summarizer based on the analysis of the input text. You can find example requests in the `commands.sh` script in each . 
 
