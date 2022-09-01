@@ -6,7 +6,6 @@ src/sum_predict.py
 
 output/
 model/
-deps/
 
 /src/graph-based/graph-based.zip
 /src/t5-article/t5-article.zip

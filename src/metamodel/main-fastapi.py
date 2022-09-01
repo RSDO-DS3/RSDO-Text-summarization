@@ -1,25 +1,19 @@
-import json
-import nltk
-import os
-import requests
-import uvicorn
 from fastapi import FastAPI
+from pydantic import BaseModel
+import requests
+import json
 from gensim.models.doc2vec import Doc2Vec
 from lemmagen3 import Lemmatizer
 from nltk.corpus import stopwords
-from pydantic import BaseModel
-from tensorflow import keras
-
 from src.inference import get_recommended_model, filter_text
-
-NLTK_PATH = f'{os.path.abspath(os.getcwd())}/deps'
-if NLTK_PATH not in nltk.data.path:
-    nltk.data.path.append(NLTK_PATH)
+from tensorflow import keras
+import uvicorn
+import nltk
+nltk.download('stopwords')
 
 
 class Item(BaseModel):
     text: str
-
 
 app = FastAPI()
 
@@ -40,7 +34,6 @@ stopwords = set(stopwords.words('slovene'))
 
 # load metamodel
 metamodel = keras.models.load_model('model/metamodel/model.h5')
-
 
 @app.post("/auto-select/")
 async def select_model(item: Item):
@@ -81,3 +74,4 @@ async def select_model(item: Item):
 
     return {'summary': 'Missing summary!',
             'model': 'No available models!'}
+
