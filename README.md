@@ -36,12 +36,12 @@ To use the `metamodel`, you have to start each model as a uvicorn server with th
 
 | **Model**   | **Port** |
 |-------------|----------|
-| metamodel   | 8000     |
-| graph-based | 8001     |
-| t5-headline | 8002     |
-| t5-article  | 8003     |
-| sumbasic    | 8004     |
-| hybrid-long | 8005     |
+| metamodel   | 5003     |
+| graph-based | 5004     |
+| t5-headline | 5005     |
+| t5-article  | 5006     |
+| sumbasic    | 5007     |
+| hybrid-long | 5008     |
 
 `main.sh` is an example of a script that automates the manual creation of uvicorn servers. Set the `--root-path` as your absolute path to the root of this project and run `y | ./main.sh --root-path /absolute/path/to/RSDO-DS3/`. This will automatically create conda environments for all models. 
 
@@ -53,13 +53,13 @@ Models can be run with Docker as well. The instructions are in the `README.md` f
 # Run a docker-compose
 This is the most straightforward method to run the project, but requires the most resources. First, make sure that you have downloaded and extracted pre-trained models to the specified folders. Next, run `docker-compose up`. This will build the environment defined in the `docker-compose.yml` file. It will take some time to build the full environment. After that, you can call the metamodel or single models. For example, to call the metamodel, use the following command:
 
-`curl -X POST --location "http://localhost:8000/auto-select/" \
+`curl -X POST --location "http://localhost:5003/auto-select/" \
   -H "Content-Type: application/json" \
   -d "{\"text\": \"Marsikdo nam zavida hitrost pri oblikovanju koalicije, a volja ljudi je bila jasna. Če ne bi bila, se nam ne bi uspelo tako hitro dogovoriti, kateri so projekti, smeri in vrednote, ki jih bomo skupaj zagovarjali v prihodnji vladi, je ob podpisu pogodbe dejal verjetni mandatar in predsednik Gibanja Svoboda Robert Golob. Nove organizacije vlade, ki jo pogodba predvideva, še ne morejo takoj udejanjiti, saj jih je ustavil SDS-ov predlog za posvetovalni referendum o zakonu o vladi, a Golob zatrjuje, da bodo to storili v prihodnjih mesecih. Na videz se povečuje kompleksnost vlade, ker se dodajajo nova ministrstva, a v resnici so ta nova ministrstva namenjena ravno tistemu, kar bo našo vlado razlikovalo od prejšnjih. Namenjena so ustvarjanju novih priložnosti, projektov in znanj, je pojasnil. Z ministrstvom za visoko šolstvo, znanost in inovacije, ministrstvom za solidarno prihodnost in ministrstvom zeleni preboj bodo po njegovih besedah omogočili, da bo Slovenija kot država odporna proti spremembam, ki jih prinaša prihodnost. Tudi predsednica SD-ja Tanja Fajon je zatrdila, da so oblikovali vlado sprememb. Naš cilj je, da Sloveniji zagotovimo močno gospodarstvo, socialno varnost za vse, skladen regionalni razvoj in Slovenijo v jedru Evrope. Nova vlada bo usmerjena v dvig dodane vrednosti, v zeleni in digitalni prehod ter v močne javne storitve. Tudi v mednarodni politiki želimo vrniti ugled državi, kjer je bil ta poškodovan. Po besedah koordinatorja Levice Luke Mesca je bilo namreč zadnje desetletje desetletje izgubljenih priložnosti, ko je Slovenija prehajala iz krize v krizo. Ta koalicijska pogodba je za dva mandata, da do leta 2030 ljudem organiziramo državo, kakršno si zaslužijo, je dodal.\" }"`
 
 To call a single model, check the specified ports defined above and use the following command, e.g., `t5-headline`: 
 
-`curl -X POST --location "http://localhost:8002/summarize/" \
+`curl -X POST --location "http://localhost:5005/summarize/" \
   -H "Content-Type: application/json" \
   -d "{\"text\": \"Marsikdo nam zavida hitrost pri oblikovanju koalicije, a volja ljudi je bila jasna. Če ne bi bila, se nam ne bi uspelo tako hitro dogovoriti, kateri so projekti, smeri in vrednote, ki jih bomo skupaj zagovarjali v prihodnji vladi, je ob podpisu pogodbe dejal verjetni mandatar in predsednik Gibanja Svoboda Robert Golob. Nove organizacije vlade, ki jo pogodba predvideva, še ne morejo takoj udejanjiti, saj jih je ustavil SDS-ov predlog za posvetovalni referendum o zakonu o vladi, a Golob zatrjuje, da bodo to storili v prihodnjih mesecih. Na videz se povečuje kompleksnost vlade, ker se dodajajo nova ministrstva, a v resnici so ta nova ministrstva namenjena ravno tistemu, kar bo našo vlado razlikovalo od prejšnjih. Namenjena so ustvarjanju novih priložnosti, projektov in znanj, je pojasnil. Z ministrstvom za visoko šolstvo, znanost in inovacije, ministrstvom za solidarno prihodnost in ministrstvom zeleni preboj bodo po njegovih besedah omogočili, da bo Slovenija kot država odporna proti spremembam, ki jih prinaša prihodnost. Tudi predsednica SD-ja Tanja Fajon je zatrdila, da so oblikovali vlado sprememb. Naš cilj je, da Sloveniji zagotovimo močno gospodarstvo, socialno varnost za vse, skladen regionalni razvoj in Slovenijo v jedru Evrope. Nova vlada bo usmerjena v dvig dodane vrednosti, v zeleni in digitalni prehod ter v močne javne storitve. Tudi v mednarodni politiki želimo vrniti ugled državi, kjer je bil ta poškodovan. Po besedah koordinatorja Levice Luke Mesca je bilo namreč zadnje desetletje desetletje izgubljenih priložnosti, ko je Slovenija prehajala iz krize v krizo. Ta koalicijska pogodba je za dva mandata, da do leta 2030 ljudem organiziramo državo, kakršno si zaslužijo, je dodal.\" }"`
 

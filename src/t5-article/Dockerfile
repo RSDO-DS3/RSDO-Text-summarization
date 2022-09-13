@@ -4,6 +4,6 @@ COPY . .
 
 RUN pip3 install -r requirements.txt -f https://download.pytorch.org/whl/cpu/torch_stable.html
 
-EXPOSE 8003
+EXPOSE 5006
 
-CMD ["uvicorn", "main-fastapi:app", "--host", "0.0.0.0", "--port", "8003"]
+CMD ["uvicorn", "main-fastapi:app", "--host", "0.0.0.0", "--port", "5006"]

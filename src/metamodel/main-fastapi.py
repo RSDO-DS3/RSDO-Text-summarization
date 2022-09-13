@@ -18,12 +18,12 @@ class Item(BaseModel):
 app = FastAPI()
 
 ports = {
-    'metamodel': 8000,
-    'graph-based': 8001,
-    't5-headline': 8002,
-    't5-article': 8003,
-    'sumbasic': 8004,
-    'hybrid-long': 8005
+    'metamodel': 5003,
+    'graph-based': 5004,
+    't5-headline': 5005,
+    't5-article': 5006,
+    'sumbasic': 5007,
+    'hybrid-long': 5008
 }
 
 # load d2v model and other requirements
