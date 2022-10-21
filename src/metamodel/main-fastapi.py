@@ -65,7 +65,7 @@ async def select_model(item: Item):
             body_json = json.dumps(body, ensure_ascii=False).encode('utf8')
             try:
                 response = requests.post(url, data=body_json)
-                json_obj = json.dumps(json.loads(response.text), ensure_ascii=False)
+                json_obj = json.loads(response.text)
                 return json_obj
 
             except requests.exceptions.ConnectionError:
