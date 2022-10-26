@@ -63,10 +63,29 @@ To call a single model, check the specified ports defined above and use the foll
   -H "Content-Type: application/json" \
   -d "{\"text\": \"Marsikdo nam zavida hitrost pri oblikovanju koalicije, a volja ljudi je bila jasna. Če ne bi bila, se nam ne bi uspelo tako hitro dogovoriti, kateri so projekti, smeri in vrednote, ki jih bomo skupaj zagovarjali v prihodnji vladi, je ob podpisu pogodbe dejal verjetni mandatar in predsednik Gibanja Svoboda Robert Golob. Nove organizacije vlade, ki jo pogodba predvideva, še ne morejo takoj udejanjiti, saj jih je ustavil SDS-ov predlog za posvetovalni referendum o zakonu o vladi, a Golob zatrjuje, da bodo to storili v prihodnjih mesecih. Na videz se povečuje kompleksnost vlade, ker se dodajajo nova ministrstva, a v resnici so ta nova ministrstva namenjena ravno tistemu, kar bo našo vlado razlikovalo od prejšnjih. Namenjena so ustvarjanju novih priložnosti, projektov in znanj, je pojasnil. Z ministrstvom za visoko šolstvo, znanost in inovacije, ministrstvom za solidarno prihodnost in ministrstvom zeleni preboj bodo po njegovih besedah omogočili, da bo Slovenija kot država odporna proti spremembam, ki jih prinaša prihodnost. Tudi predsednica SD-ja Tanja Fajon je zatrdila, da so oblikovali vlado sprememb. Naš cilj je, da Sloveniji zagotovimo močno gospodarstvo, socialno varnost za vse, skladen regionalni razvoj in Slovenijo v jedru Evrope. Nova vlada bo usmerjena v dvig dodane vrednosti, v zeleni in digitalni prehod ter v močne javne storitve. Tudi v mednarodni politiki želimo vrniti ugled državi, kjer je bil ta poškodovan. Po besedah koordinatorja Levice Luke Mesca je bilo namreč zadnje desetletje desetletje izgubljenih priložnosti, ko je Slovenija prehajala iz krize v krizo. Ta koalicijska pogodba je za dva mandata, da do leta 2030 ljudem organiziramo državo, kakršno si zaslužijo, je dodal.\" }"`
 
-# Train a summarization model
-The T5 summarization model was fine-tuned on a machine-translated Slovene CNN / DailyMail dataset which can be downloaded from [link](https://nas.cjvt.si/index.php/s/Bpob8qZ64TY3LM3). The original English dataset can be accessed through [huggingface](https://huggingface.co/datasets/cnn_dailymail). The CNN / DailyMail dataset is an English-language dataset containing approximately 300k unique news articles written by journalists at CNN and the Daily Mail. The dataset consists of texts and highlights that are used as short summaries of an article.
+# Train your models
+In this section, you can find the complete instructions for training and building your models from scratch.
 
-You can find the script `train_T5.py`for training and evaluating the model in this repository in the folder `src`. If you want to train your model, download the pre-trained [Slovene T5 model](https://huggingface.co/cjvt/t5-sl-small), the Slovene dataset, and set the paths to it in the script. 
+### Datasets and pre-trained models
+To train our models, we used SURS (Statistical Office of the Republic of Slovenia) and STA (Slovene Press Agency) datasets which can not be publicly released. We also used [KAS corpus](http://hdl.handle.net/11356/1448) which has limited availability and [AutoSentiNews](http://hdl.handle.net/11356/1109) which is in the public domain and can be freely used. For the pre-trained models, we used [t5-sl-small](https://huggingface.co/cjvt/t5-sl-small) as our pre-trained Slovene text generator and [LaBSE](https://huggingface.co/sentence-transformers/LaBSE) as a multilingual sentence encoder. 
+
+### Metamodel
+`metamodel` is trained on the KAS corpus, AutoSentiNews, STA, and SURS and consists of two independent models: Doc2vec and the main model. Before training, please make sure that you have installed [DVC](https://dvc.org/) on your system. The `dvc.yaml` file contains all stages that need to be executed to get the final model. The `params.yaml` file contains parameter values for each of the corresponding stages. The stages get executed with the `dvc run` command within your terminal in the root directory. Before running this command, please make sure that you have defined all the paths to the datasets described in the previous section in the `get_data.py` file. Alternatively, you can also run commands independently of DVC by executing the python command defined within each stage. 
+
+### Article summarization model
+`t5-article` was trained on a Slovene machine-translated CNN / DailyMail dataset which can be downloaded from [link](https://nas.cjvt.si/index.php/s/Bpob8qZ64TY3LM3). The original English dataset can be accessed through [huggingface](https://huggingface.co/datasets/cnn_dailymail). The CNN / DailyMail dataset is an English-language dataset containing approximately 300k unique news articles written by journalists at CNN and the Daily Mail. The dataset consists of texts and highlights that are used as short summaries of an article. You can find the script `train.py` for training and evaluating the model in this repository in the folder `src`. If you want to train your model, download the pre-trained [t5-sl-small](https://huggingface.co/cjvt/t5-sl-small), the Slovene machine-translated dataset, and set the correct paths in the script. After that, run `python src/train.py`. The trained summarization model can also be used as an abstractor model in the `hybrid-long` summarization model.
+
+### Graph-based model
+`graph-based` is an unsupervised model that uses only pre-trained sentence encoder LaBSE and a script to calculate sentence centrality scores. 
+
+### Hybrid-long summarization model
+`hybrid-long` is a combination of abstractive and extractive approaches. It combines `t5-article` and `graph-based`. 
+
+### SumBasic model
+`SumBasic` is an unsupervised basic summarization model. 
+
+### Headline generator
+`t5-headline` was trained on STA articles as a source and their headlines as target data in a similar way to `t5-article` except for a few different parameter values. In the script `src/train.py`, change the paths to the pre-trained `t5-sl-small` model and your datasets. After that, run `python src/train.py`.
 
  ---
 

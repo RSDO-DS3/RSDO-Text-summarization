@@ -1,0 +1,19 @@
+d2v:
+  max_vocab_size: 100000
+  vector_size: 256
+  window: 5
+  min_count: 1
+  workers: 16
+  epochs: 5
+metamodel:
+  validation_split: 0.1
+  seed: 10
+  patience: 2
+  hidden_layer_size: 1024
+tree:
+  min_samples_split: 100
+  min_samples_leaf: 100
+forest:
+  n_estimators: 300
+  min_samples_split: 100
+  min_samples_leaf: 100

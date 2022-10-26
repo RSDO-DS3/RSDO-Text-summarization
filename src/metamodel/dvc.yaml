@@ -1,0 +1,88 @@
+stages:
+  prepare-data-d2v:  # this is a lemmatized dataset for training doc2vec model
+    cmd: python src/get_data.py --model d2v
+    deps:  # kas deps are remove because of slow performance
+    - data/surs.jsonl
+    - src/get_data.py
+    outs:
+    - data/doc2vec-training.jsonl
+
+    frozen: true
+  prepare-data-metamodel:  # this stage produces a dataset for summarization models
+    cmd: python src/get_data.py --model metamodel
+    deps:  # kas deps are remove because of slow performance
+    - data/surs.jsonl
+    - src/get_data.py
+    outs:
+    - data/metamodel-training.jsonl
+
+    frozen: true
+
+  d2v:  # trains doc2vec model
+    cmd: python src/train_doc2vec.py data/doc2vec-training.jsonl model/doc2vec/model
+    deps:
+    - data/doc2vec-training.jsonl
+    - src/train_doc2vec.py
+    params:
+    - d2v.epochs
+    - d2v.max_vocab_size
+    - d2v.min_count
+    - d2v.vector_size
+    - d2v.window
+    - d2v.workers
+    outs:
+    - model/doc2vec/model
+
+  prepare-embeddings:
+    cmd: python src/prepare_embeddings.py data/final model/doc2vec/model model/doc2vec/final
+    deps:
+    - src/prepare_embeddings.py
+    - data/final
+    - model/doc2vec/model
+    outs:
+    - model/doc2vec/final
+
+  random-baseline:
+    cmd: python src/random_baseline.py data/final/train.jsonl data/final/test.jsonl
+    deps:
+    - src/random_baseline.py
+    - data/final/train.jsonl
+    - data/final/test.jsonl
+    metrics:
+    - baseline-metrics.json:
+        cache: false
+
+  metamodel:
+    cmd: python src/train_metamodel.py data/final model/doc2vec/final model/metamodel/model.h5
+    deps:
+    - src/train_metamodel.py
+    - data/final
+    - model/doc2vec/final
+    params:
+    - metamodel.seed
+    - metamodel.validation_split
+    - metamodel.hidden_layer_size
+    - metamodel.patience
+    metrics:
+    - advanced-metrics.json:
+        cache: false
+    outs:
+    - model/metamodel/model.h5
+
+  trees:
+    cmd: python src/train_trees.py data/final model/doc2vec/final
+    deps:
+      - src/train_trees.py
+      - data/final
+      - model/doc2vec/final
+    params:
+      - tree.min_samples_split
+      - tree.min_samples_leaf
+      - forest.n_estimators
+      - forest.min_samples_split
+      - forest.min_samples_leaf
+    metrics:
+      - tree-metrics.json:
+          cache: false
+      - forest-metrics.json:
+          cache: false
