@@ -10,7 +10,24 @@ To run this project, install python 3.8 and dependencies:
 To test the service, try sending a request with the curl command provided in the file `commands.sh`
 
 # Docker
-`docker buildx build --platform linux/amd64 . -t t5-article -f Dockerfile`
 
-`docker run --rm --platform linux/amd64 -it --name t5-article -p:5006:5006 t5-article`
+**Building the image**
+
+```bash
+docker buildx build --platform linux/amd64 . -t t5-article -f Dockerfile
+```
+
+**Running it**
+```bash
+docker run --rm --platform linux/amd64 -it --name t5-article -p:5006:5006 t5-article
+```
+
+**With external model path**
+```bash
+docker run --rm --platform linux/amd64 -it \
+    -e MODEL_PATH=/slo-t5 \
+    -v /Users/otobrglez/Projects/slovenscina-eu/model/SloT5-cnndm_slo_pretraining:/slo-t5 \
+    --name t5-article \
+    -p:5006:5006
+```
 
